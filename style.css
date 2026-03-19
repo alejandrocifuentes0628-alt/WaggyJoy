@@ -1,81 +1,51 @@
-:root {
-    --primario: #48a9a6; /* Turquesa del logo */
-    --secundario: #f2a65a; /* Naranja del logo */
-    --fondo: #fffaf2; /* Crema suave */
-    --texto: #333;
-}
+let lastX = 0;
+let lastY = 0;
+let distanceThreshold = 40; // Ajusta este número para que los pasos sean más largos o cortos
+let stepSide = true; // true = derecha, false = izquierda
 
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin: 0;
-    background-color: var(--fondo);
-    color: var(--texto);
-}
+document.addEventListener('mousemove', (e) => {
+    // Calculamos cuánto se ha movido el mouse desde la última huella
+    let dist = Math.sqrt(Math.pow(e.pageX - lastX, 2) + Math.pow(e.pageY - lastY, 2));
 
-header {
-    background: white;
-    padding: 1rem 5%;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-}
+    if (dist > distanceThreshold) {
+        const paw = document.createElement('div');
+        paw.innerHTML = '🐾';
+        paw.className = 'paw-print';
+        
+        // Posición base
+        let x = e.pageX;
+        let y = e.pageY;
 
-nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
+        // Efecto caminar: desplazamos un poco a los lados alternadamente
+        let offset = 15; 
+        if (stepSide) {
+            x += offset;
+        } else {
+            x -= offset;
+        }
 
-.logo {
-    font-size: 1.8rem;
-    font-weight: bold;
-    color: var(--primario);
-}
+        paw.style.left = `${x}px`;
+        paw.style.top = `${y}px`;
+        
+        // Colores de WaggyJoy
+        const colors = ['#48a9a6', '#f2a65a'];
+        paw.style.color = colors[Math.floor(Math.random() * colors.length)];
+        
+        // Orientación: Calculamos el ángulo hacia donde se mueve el mouse
+        let angle = Math.atan2(e.pageY - lastY, e.pageX - lastX) * (180 / Math.PI);
+        paw.style.transform = `rotate(${angle + 90}deg)`; // +90 para que la punta mire hacia adelante
 
-.logo span { color: var(--secundario); }
+        document.body.appendChild(paw);
 
-nav ul { display: flex; list-style: none; }
-nav ul li { margin-left: 20px; }
-nav a { text-decoration: none; color: var(--texto); font-weight: 500; }
+        // Guardamos la posición actual y cambiamos de pie
+        lastX = e.pageX;
+        lastY = e.pageY;
+        stepSide = !stepSide;
 
-.hero {
-    text-align: center;
-    padding: 100px 10%;
-    background: linear-gradient(rgba(255,255,255,0.7), rgba(255,255,255,0.7)), url('https://images.unsplash.com/photo-1450778869180-41d0601e046e?auto=format&fit=crop&q=80&w=1500');
-    background-size: cover;
-}
-
-.cta-button {
-    background-color: var(--secundario);
-    color: white;
-    padding: 15px 30px;
-    border: none;
-    border-radius: 50px;
-    font-size: 1.1rem;
-    cursor: pointer;
-    transition: transform 0.3s;
-}
-
-.cta-button:hover { transform: scale(1.05); }
-
-.features {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
-    padding: 50px 5%;
-}
-
-.card {
-    background: white;
-    padding: 30px;
-    border-radius: 15px;
-    text-align: center;
-    border-bottom: 5px solid var(--primario);
-}
-
-.paw-print {
-    position: absolute;
-    font-size: 20px;
-    pointer-events: none; /* Esto evita que las huellas bloqueen los botones */
-    z-index: 9999;
-    transition: opacity 0.5s ease-out;
-    user-select: none;
-}
+        // Desvanecimiento lento
+        setTimeout(() => {
+            paw.style.opacity = '0';
+            setTimeout(() => paw.remove(), 500);
+        }, 1500);
+    }
+});
