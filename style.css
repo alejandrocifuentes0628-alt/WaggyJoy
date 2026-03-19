@@ -1,51 +1,89 @@
-let lastX = 0;
-let lastY = 0;
-let distanceThreshold = 40; // Ajusta este número para que los pasos sean más largos o cortos
-let stepSide = true; // true = derecha, false = izquierda
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Quicksand:wght@400;600&display=swap');
 
-document.addEventListener('mousemove', (e) => {
-    // Calculamos cuánto se ha movido el mouse desde la última huella
-    let dist = Math.sqrt(Math.pow(e.pageX - lastX, 2) + Math.pow(e.pageY - lastY, 2));
+:root {
+    --primario: #5bb3ab;
+    --secundario: #ffb366;
+    --fondo: #fff9f0;
+    --texto: #4a3a35;
+}
 
-    if (dist > distanceThreshold) {
-        const paw = document.createElement('div');
-        paw.innerHTML = '🐾';
-        paw.className = 'paw-print';
-        
-        // Posición base
-        let x = e.pageX;
-        let y = e.pageY;
+body {
+    font-family: 'Quicksand', sans-serif;
+    background-color: var(--fondo);
+    color: var(--texto);
+    margin: 0;
+    line-height: 1.6;
+}
 
-        // Efecto caminar: desplazamos un poco a los lados alternadamente
-        let offset = 15; 
-        if (stepSide) {
-            x += offset;
-        } else {
-            x -= offset;
-        }
+header {
+    padding: 20px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+}
 
-        paw.style.left = `${x}px`;
-        paw.style.top = `${y}px`;
-        
-        // Colores de WaggyJoy
-        const colors = ['#48a9a6', '#f2a65a'];
-        paw.style.color = colors[Math.floor(Math.random() * colors.length)];
-        
-        // Orientación: Calculamos el ángulo hacia donde se mueve el mouse
-        let angle = Math.atan2(e.pageY - lastY, e.pageX - lastX) * (180 / Math.PI);
-        paw.style.transform = `rotate(${angle + 90}deg)`; // +90 para que la punta mire hacia adelante
+.logo { font-family: 'Fredoka', sans-serif; font-size: 2rem; color: var(--primario); }
+.logo span { color: var(--secundario); }
 
-        document.body.appendChild(paw);
+.shop-link { text-decoration: none; color: var(--primario); font-weight: bold; border-bottom: 2px solid; }
 
-        // Guardamos la posición actual y cambiamos de pie
-        lastX = e.pageX;
-        lastY = e.pageY;
-        stepSide = !stepSide;
+.hero {
+    padding: 100px 10%;
+    text-align: center;
+    background: white;
+    border-radius: 0 0 40px 40px;
+}
 
-        // Desvanecimiento lento
-        setTimeout(() => {
-            paw.style.opacity = '0';
-            setTimeout(() => paw.remove(), 500);
-        }, 1500);
-    }
-});
+.cta-button {
+    display: inline-block;
+    background: var(--secundario);
+    color: white;
+    padding: 18px 35px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: bold;
+    box-shadow: 0 4px 15px rgba(255,179,102,0.4);
+    transition: 0.3s;
+}
+
+.grid-animales {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); /* Se adapta solo al número de ítems */
+    gap: 20px;
+    padding: 40px 10%;
+}
+
+.animal-card {
+    background: white;
+    text-decoration: none;
+    padding: 25px;
+    border-radius: 20px;
+    text-align: center;
+    font-size: 2rem;
+    transition: 0.3s;
+    border: 2px solid transparent;
+}
+
+.animal-card:hover {
+    transform: translateY(-10px);
+    border-color: var(--primario);
+}
+
+.animal-card span { display: block; font-size: 1rem; color: var(--texto); margin-top: 10px; }
+
+.dropship-trust {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 50px 10%;
+    justify-content: center;
+}
+
+.trust-box {
+    background: #fdf2e4;
+    padding: 20px;
+    border-radius: 15px;
+    width: 250px;
+    text-align: center;
+}
