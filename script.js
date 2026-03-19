@@ -1,26 +1,30 @@
-document.addEventListener('mousemove', (e) => {
-    // Creamos el elemento de la huellita
-    const paw = document.createElement('div');
-    paw.innerHTML = '🐾'; // Emoji de huella
-    paw.className = 'paw-print';
-    
-    // Posicionamos la huella donde está el mouse
-    paw.style.left = `${e.pageX}px`;
-    paw.style.top = `${e.pageY}px`;
-    
-    // Colores aleatorios basados en tu marca
-    const colors = ['#48a9a6', '#f2a65a', '#ff6b6b', '#ffd166'];
-    paw.style.color = colors[Math.floor(Math.random() * colors.length)];
-    
-    // Rotación aleatoria para que parezca que caminan
-    const rotation = Math.random() * 360;
-    paw.style.transform = `rotate(${rotation}deg)`;
+const cards = document.querySelectorAll('.animal-card');
 
-    document.body.appendChild(paw);
+cards.forEach(card => {
+    card.addEventListener('mouseenter', () => {
+        const iconAttribute = card.getAttribute('data-animal');
+        
+        // Decidimos qué icono mostrar: si es perro o gato, usamos la huella 🐾
+        let iconToUse = iconAttribute;
+        if (iconAttribute === '🐶' || iconAttribute === '🐱') {
+            iconToUse = '🐾';
+        }
 
-    // Borramos la huella después de 1 segundo para no saturar
-    setTimeout(() => {
-        paw.style.opacity = '0';
-        setTimeout(() => paw.remove(), 500);
-    }, 1000);
+        for (let i = 0; i < 3; i++) {
+            setTimeout(() => {
+                const particle = document.createElement('div');
+                particle.innerHTML = iconToUse;
+                particle.className = 'floating-icon';
+                
+                // Centramos el icono en la tarjeta
+                particle.style.left = `calc(50% - 12px)`; 
+                particle.style.top = `10px`;
+
+                card.appendChild(particle);
+
+                // Se elimina solo para no gastar memoria
+                setTimeout(() => particle.remove(), 1000);
+            }, i * 150); // Sale uno detrás del otro
+        }
+    });
 });
