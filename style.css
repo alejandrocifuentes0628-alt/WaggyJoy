@@ -1,10 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Quicksand:wght@400;600&display=swap');
-
 :root {
     --primario: #5bb3ab;
     --secundario: #ffb366;
     --fondo: #fff9f0;
     --texto: #4a3a35;
+    --blanco: #ffffff;
 }
 
 body {
@@ -12,78 +11,114 @@ body {
     background-color: var(--fondo);
     color: var(--texto);
     margin: 0;
-    line-height: 1.6;
+    overflow-x: hidden;
 }
 
+/* --- Header --- */
 header {
-    padding: 20px 5%;
+    background: var(--blanco);
+    padding: 15px 5%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: white;
+    border-bottom: 2px solid #f0e6d6;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
-.logo { font-family: 'Fredoka', sans-serif; font-size: 2rem; color: var(--primario); }
+.logo {
+    font-family: 'Fredoka', sans-serif;
+    font-size: 1.8rem;
+    color: var(--primario);
+    font-weight: 600;
+}
+
 .logo span { color: var(--secundario); }
 
-.shop-link { text-decoration: none; color: var(--primario); font-weight: bold; border-bottom: 2px solid; }
-
-.hero {
-    padding: 100px 10%;
-    text-align: center;
-    background: white;
-    border-radius: 0 0 40px 40px;
+.shop-link {
+    text-decoration: none;
+    color: var(--primario);
+    font-weight: bold;
+    font-size: 0.8rem;
+    border: 2px solid var(--primario);
+    padding: 8px 15px;
+    border-radius: 20px;
 }
+
+/* --- Hero --- */
+.hero {
+    padding: 80px 10%;
+    text-align: center;
+    background: var(--blanco);
+    border-radius: 0 0 50px 50px;
+}
+
+.hero h1 { font-family: 'Fredoka', sans-serif; font-size: 2.5rem; margin: 0; }
 
 .cta-button {
     display: inline-block;
     background: var(--secundario);
     color: white;
-    padding: 18px 35px;
+    padding: 15px 35px;
     border-radius: 50px;
     text-decoration: none;
     font-weight: bold;
-    box-shadow: 0 4px 15px rgba(255,179,102,0.4);
-    transition: 0.3s;
 }
+
+/* --- Categorías y Huellas --- */
+.categories { padding: 50px 10%; text-align: center; }
 
 .grid-animales {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); /* Se adapta solo al número de ítems */
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
     gap: 20px;
-    padding: 40px 10%;
 }
 
 .animal-card {
-    background: white;
+    background: var(--blanco);
     text-decoration: none;
-    padding: 25px;
-    border-radius: 20px;
-    text-align: center;
-    font-size: 2rem;
+    padding: 30px 15px;
+    border-radius: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 2.5rem;
     transition: 0.3s;
+    position: relative;
     border: 2px solid transparent;
 }
 
 .animal-card:hover {
-    transform: translateY(-10px);
+    transform: translateY(-5px);
     border-color: var(--primario);
 }
 
-.animal-card span { display: block; font-size: 1rem; color: var(--texto); margin-top: 10px; }
+.animal-card span { font-size: 1rem; color: var(--texto); margin-top: 10px; font-weight: bold; }
 
-.dropship-trust {
+/* Animación de los iconos flotantes */
+.floating-icon {
+    position: absolute;
+    font-size: 24px;
+    pointer-events: none;
+    z-index: 100;
+    animation: floatAndFade 1s ease-out forwards;
+}
+
+@keyframes floatAndFade {
+    0% { transform: translateY(0) scale(0.5); opacity: 0; }
+    30% { opacity: 1; }
+    100% { transform: translateY(-100px) scale(1.5); opacity: 0; }
+}
+
+/* --- Trust --- */
+.trust-section {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px;
-    padding: 50px 10%;
     justify-content: center;
+    gap: 20px;
+    padding: 30px;
+    background: #fdf2e4;
 }
 
-.trust-box {
-    background: #fdf2e4;
-    padding: 20px;
-    border-radius: 15px;
-    width: 250px;
-    text-align: center;
-}
+.trust-item { text-align: center; width: 180px; }
